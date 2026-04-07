@@ -1,0 +1,66 @@
+version: "3.9"
+
+# =============================================================
+#  Smart Hospital — On-Premises Docker Stack
+#  Services:  MySQL 8  +  Grafana 10
+# =============================================================
+
+services:
+  # -----------------------------------------------------------
+  # MySQL — relational database server
+  # -----------------------------------------------------------
+  mysql:
+    image: mysql:8.0
+    container_name: hospital-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: hospital_root_2024
+      MYSQL_DATABASE: smart_hospital
+      MYSQL_USER: hospital_user
+      MYSQL_PASSWORD: hospital_pass_2024
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./sql/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
+      - ./sql/seed_data.sql:/docker-entrypoint-initdb.d/02_seed_data.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost",
+             "-u", "root", "-phospital_root_2024"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    networks:
+      - hospital_net
+
+  # -----------------------------------------------------------
+  # Grafana — analytics dashboard
+  # -----------------------------------------------------------
+  grafana:
+    image: grafana/grafana:10.4.0
+    container_name: hospital-grafana
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: hospital_admin_2024
+      GF_USERS_ALLOW_SIGN_UP: "false"
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning:ro
+      - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+    networks:
+      - hospital_net
+
+# =============================================================
+volumes:
+  mysql_data:
+  grafana_data:
+
+networks:
+  hospital_net:
+    driver: bridge
