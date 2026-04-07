@@ -48,7 +48,7 @@ http://<VM-IP>:3000
 http://<VM-IP>:8080
 ```
 - Grafana login: **admin / hospital_admin_2024**
-- phpMyAdmin login: use MySQL credentials (for example `root` / `hospital_root_2024`)
+- phpMyAdmin login: use MySQL credentials (for example, `root` / `hospital_root_2024`)
 
 ---
 

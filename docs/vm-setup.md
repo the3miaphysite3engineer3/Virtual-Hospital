@@ -101,6 +101,8 @@ For phpMyAdmin, open:
 http://<VM-IP>:8080
 ```
 
+Login: **root / hospital_root_2024** or **hospital_user / hospital_pass_2024**
+
 ---
 
 ## Part 9 — Access MySQL Directly (optional)
