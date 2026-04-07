@@ -118,6 +118,7 @@ doctors  ─────┘         │
 |---------|---------------|-----------|-----|
 | MySQL   | 3306          | 3307      | mysql://localhost:3307 |
 | Grafana | 3000          | 3000      | http://localhost:3000  |
+| phpMyAdmin | 80         | 8080      | http://localhost:8080  |
 
 ---
 

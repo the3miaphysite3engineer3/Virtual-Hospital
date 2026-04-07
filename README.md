@@ -1,4 +1,4 @@
-# Smart Hospital — On-Premises Deployment with Docker, MySQL & Grafana
+# Smart Hospital — On-Premises Deployment with Docker, MySQL, Grafana & phpMyAdmin
 
 A **graduation-project-ready** smart hospital system deployed on a virtual machine on your laptop.  
 No real server required — everything runs inside a VMware/VirtualBox VM using Docker.
@@ -12,6 +12,7 @@ No real server required — everything runs inside a VMware/VirtualBox VM using 
 | Containerisation | Docker + Docker Compose | Run all services with one command |
 | Database | MySQL 8.0 | Relational hospital database (5 tables) |
 | Dashboard | Grafana 10 | Real-time analytics dashboard |
+| DB Admin UI | phpMyAdmin | Web interface to browse/manage MySQL |
 | Sample data | SQL seed scripts | 50 patients · 10 doctors · 80 appointments · billing |
 | Analysis queries | `sql/queries.sql` | 20+ ready-to-use analytical SQL queries |
 
@@ -36,14 +37,15 @@ bash scripts/setup.sh
 
 This will automatically:
 - Install Docker and Docker Compose
-- Start MySQL (port **3307**) and Grafana (port **3000**)
+- Start MySQL (port **3307**), Grafana (port **3000**), and phpMyAdmin (port **8080**)
 - Load the hospital schema and seed data
 - Print the access URLs
 
-### 3 — Open the dashboard
+### 3 — Open Grafana and phpMyAdmin
 On your laptop browser, open:
 ```
 http://<VM-IP>:3000
+http://<VM-IP>:8080
 ```
 Login: **admin / hospital_admin_2024**
 
@@ -121,6 +123,7 @@ The pre-built Grafana dashboard contains 14 panels:
 | Service | URL | Username | Password |
 |---------|-----|----------|----------|
 | Grafana | http://\<VM-IP\>:3000 | admin | hospital_admin_2024 |
+| phpMyAdmin | http://\<VM-IP\>:8080 | root or hospital_user | same MySQL password |
 | MySQL root | localhost:3307 | root | hospital_root_2024 |
 | MySQL app user | localhost:3307 | hospital_user | hospital_pass_2024 |
 

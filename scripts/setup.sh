@@ -98,6 +98,7 @@ echo -e "${GREEN}=============================================================${
 echo ""
 echo "  Grafana Dashboard : http://${HOST_IP}:3000"
 echo "  Grafana login     : admin / hospital_admin_2024"
+echo "  phpMyAdmin        : http://${HOST_IP}:8080"
 echo ""
 echo "  MySQL host        : ${HOST_IP}:3307"
 echo "  MySQL database    : smart_hospital"

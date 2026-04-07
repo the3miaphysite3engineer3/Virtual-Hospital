@@ -77,7 +77,7 @@ bash scripts/setup.sh
 
 The script will:
 - Install Docker + Docker Compose
-- Start MySQL and Grafana containers
+- Start MySQL, Grafana, and phpMyAdmin containers
 - Load the hospital schema and sample data automatically
 - Print the access URL when done
 
@@ -94,6 +94,12 @@ Grafana Dashboard : http://192.168.x.x:3000
 Open that URL in your laptop browser (VMware creates a bridged/NAT network so your laptop can reach the VM).
 
 Login: **admin / hospital_admin_2024**
+
+For phpMyAdmin, open:
+
+```
+http://192.168.x.x:8080
+```
 
 ---
 
