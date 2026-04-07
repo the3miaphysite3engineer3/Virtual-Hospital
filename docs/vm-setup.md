@@ -98,7 +98,7 @@ Login: **admin / hospital_admin_2024**
 For phpMyAdmin, open:
 
 ```
-http://192.168.x.x:8080
+http://<VM-IP>:8080
 ```
 
 ---

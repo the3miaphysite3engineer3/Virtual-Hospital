@@ -47,7 +47,8 @@ On your laptop browser, open:
 http://<VM-IP>:3000
 http://<VM-IP>:8080
 ```
-Login: **admin / hospital_admin_2024**
+- Grafana login: **admin / hospital_admin_2024**
+- phpMyAdmin login: use MySQL credentials (for example `root` / `hospital_root_2024`)
 
 ---
 
