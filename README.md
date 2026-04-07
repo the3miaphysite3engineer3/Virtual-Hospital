@@ -36,7 +36,7 @@ bash scripts/setup.sh
 
 This will automatically:
 - Install Docker and Docker Compose
-- Start MySQL (port **3306**) and Grafana (port **3000**)
+- Start MySQL (port **3307**) and Grafana (port **3000**)
 - Load the hospital schema and seed data
 - Print the access URLs
 
@@ -121,8 +121,8 @@ The pre-built Grafana dashboard contains 14 panels:
 | Service | URL | Username | Password |
 |---------|-----|----------|----------|
 | Grafana | http://\<VM-IP\>:3000 | admin | hospital_admin_2024 |
-| MySQL root | localhost:3306 | root | hospital_root_2024 |
-| MySQL app user | localhost:3306 | hospital_user | hospital_pass_2024 |
+| MySQL root | localhost:3307 | root | hospital_root_2024 |
+| MySQL app user | localhost:3307 | hospital_user | hospital_pass_2024 |
 
 ---
 

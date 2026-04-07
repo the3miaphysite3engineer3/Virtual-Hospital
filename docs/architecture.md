@@ -116,7 +116,7 @@ doctors  ─────┘         │
 
 | Service | Container Port | Host Port | URL |
 |---------|---------------|-----------|-----|
-| MySQL   | 3306          | 3306      | mysql://localhost:3306 |
+| MySQL   | 3306          | 3307      | mysql://localhost:3307 |
 | Grafana | 3000          | 3000      | http://localhost:3000  |
 
 ---
