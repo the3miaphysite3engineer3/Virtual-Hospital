@@ -69,6 +69,7 @@ services:
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
+      PMA_ARBITRARY: 0
     ports:
       - "8080:80"
     networks:
