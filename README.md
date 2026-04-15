@@ -1,4 +1,4 @@
-# Smart Hospital — On-Premises Deployment with Docker, MySQL, Grafana & phpMyAdmin
+# Smart Hospital — On-Premises Deployment with Docker, PostgreSQL, Grafana & pgAdmin
 
 A **graduation-project-ready** smart hospital system deployed on a virtual machine on your laptop.  
 No real server required — everything runs inside a VMware/VirtualBox VM using Docker.
@@ -10,9 +10,9 @@ No real server required — everything runs inside a VMware/VirtualBox VM using 
 | Component | Technology | Purpose |
 |-----------|-----------|---------|
 | Containerisation | Docker + Docker Compose | Run all services with one command |
-| Database | MySQL 8.0 | Relational hospital database (5 tables) |
+| Database | PostgreSQL 16 | Relational hospital database (5 tables) |
 | Dashboard | Grafana 10 | Real-time analytics dashboard |
-| DB Admin UI | phpMyAdmin | Web interface to browse/manage MySQL |
+| DB Admin UI | pgAdmin | Web interface to browse/manage PostgreSQL |
 | Sample data | SQL seed scripts | 50 patients · 10 doctors · 80 appointments · billing |
 | Analysis queries | `sql/queries.sql` | 20+ ready-to-use analytical SQL queries |
 
@@ -37,18 +37,18 @@ bash scripts/setup.sh
 
 This will automatically:
 - Install Docker and Docker Compose
-- Start MySQL (port **3307**), Grafana (port **3000**), and phpMyAdmin (port **8080**)
+- Start PostgreSQL (port **5433**), Grafana (port **3000**), and pgAdmin (port **8080**)
 - Load the hospital schema and seed data
 - Print the access URLs
 
-### 3 — Open Grafana and phpMyAdmin
+### 3 — Open Grafana and pgAdmin
 On your laptop browser, open:
 ```
 http://<VM-IP>:3000
 http://<VM-IP>:8080
 ```
 - Grafana login: **admin / hospital_admin_2024**
-- phpMyAdmin login: use MySQL credentials (for example, `root` / `hospital_root_2024`)
+- pgAdmin login: `admin@hospital.local` / `hospital_pgadmin_2024`
 
 ---
 
@@ -62,10 +62,10 @@ docker compose down           # stop everything
 
 ---
 
-## MySQL quick access
+## PostgreSQL quick access
 
 ```bash
-docker compose exec mysql mysql -u root -phospital_root_2024 smart_hospital
+docker compose exec postgres psql -U hospital_user -d smart_hospital
 ```
 
 Then paste any query from [`sql/queries.sql`](sql/queries.sql).
@@ -83,7 +83,7 @@ Virtual-Hospital/
 │   └── queries.sql                 ← 20+ analytical SQL queries
 ├── grafana/
 │   ├── provisioning/
-│   │   ├── datasources/mysql.yaml  ← auto-connect Grafana → MySQL
+│   │   ├── datasources/postgres.yaml ← auto-connect Grafana → PostgreSQL
 │   │   └── dashboards/dashboard.yaml
 │   └── dashboards/
 │       └── hospital-dashboard.json ← pre-built 14-panel dashboard
@@ -124,9 +124,8 @@ The pre-built Grafana dashboard contains 14 panels:
 | Service | URL | Username | Password |
 |---------|-----|----------|----------|
 | Grafana | http://\<VM-IP\>:3000 | admin | hospital_admin_2024 |
-| phpMyAdmin | http://\<VM-IP\>:8080 | root or hospital_user | same MySQL password |
-| MySQL root | localhost:3307 | root | hospital_root_2024 |
-| MySQL app user | localhost:3307 | hospital_user | hospital_pass_2024 |
+| pgAdmin | http://\<VM-IP\>:8080 | admin@hospital.local | hospital_pgadmin_2024 |
+| PostgreSQL app user | localhost:5433 | hospital_user | hospital_pass_2024 |
 
 ---
 

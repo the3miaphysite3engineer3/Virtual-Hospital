@@ -3,8 +3,6 @@
 -- Run AFTER schema.sql + seed_data.sql
 -- =============================================================
 
-USE smart_hospital;
-
 -- ---------------------------------------------------------------
 -- SECTION 1: PATIENT ANALYTICS
 -- ---------------------------------------------------------------
@@ -21,16 +19,22 @@ GROUP BY gender;
 -- 1.3  Patients by age group
 SELECT
     CASE
-        WHEN TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) < 18  THEN 'Under 18'
-        WHEN TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) < 30  THEN '18 – 29'
-        WHEN TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) < 45  THEN '30 – 44'
-        WHEN TIMESTAMPDIFF(YEAR, date_of_birth, CURDATE()) < 60  THEN '45 – 59'
+        WHEN EXTRACT(YEAR FROM AGE(CURRENT_DATE, date_of_birth)) < 18 THEN 'Under 18'
+        WHEN EXTRACT(YEAR FROM AGE(CURRENT_DATE, date_of_birth)) < 30 THEN '18 – 29'
+        WHEN EXTRACT(YEAR FROM AGE(CURRENT_DATE, date_of_birth)) < 45 THEN '30 – 44'
+        WHEN EXTRACT(YEAR FROM AGE(CURRENT_DATE, date_of_birth)) < 60 THEN '45 – 59'
         ELSE '60+'
     END AS age_group,
     COUNT(*) AS total
 FROM patients
 GROUP BY age_group
-ORDER BY FIELD(age_group, 'Under 18','18 – 29','30 – 44','45 – 59','60+');
+ORDER BY CASE age_group
+    WHEN 'Under 18' THEN 1
+    WHEN '18 – 29' THEN 2
+    WHEN '30 – 44' THEN 3
+    WHEN '45 – 59' THEN 4
+    ELSE 5
+END;
 
 -- 1.4  Patients by insurance provider
 SELECT
@@ -42,7 +46,7 @@ ORDER BY total DESC;
 
 -- 1.5  New patient registrations per month
 SELECT
-    DATE_FORMAT(registration_date, '%Y-%m') AS month,
+    TO_CHAR(registration_date, 'YYYY-MM') AS month,
     COUNT(*)                                 AS new_patients
 FROM patients
 GROUP BY month
@@ -94,7 +98,7 @@ ORDER BY total DESC;
 
 -- 3.3  Appointments per month (trend chart)
 SELECT
-    DATE_FORMAT(appointment_date, '%Y-%m') AS month,
+    TO_CHAR(appointment_date, 'YYYY-MM') AS month,
     COUNT(*)                                AS total_appointments
 FROM appointments
 GROUP BY month
@@ -102,15 +106,15 @@ ORDER BY month;
 
 -- 3.4  Appointments per weekday (peak day analysis)
 SELECT
-    DAYNAME(appointment_date) AS weekday,
+    TRIM(TO_CHAR(appointment_date, 'Day')) AS weekday,
     COUNT(*)                   AS total
 FROM appointments
 GROUP BY weekday
-ORDER BY DAYOFWEEK(appointment_date);
+ORDER BY EXTRACT(DOW FROM appointment_date);
 
 -- 3.5  Cancellation & No-Show rate
 SELECT
-    ROUND(SUM(status IN ('Cancelled','No-Show')) * 100.0 / COUNT(*), 2)
+    ROUND(SUM(CASE WHEN status IN ('Cancelled','No-Show') THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2)
         AS cancellation_rate_pct
 FROM appointments;
 
@@ -180,7 +184,7 @@ ORDER BY total DESC;
 
 -- 5.4  Monthly revenue trend
 SELECT
-    DATE_FORMAT(billing_date, '%Y-%m') AS month,
+    TO_CHAR(billing_date, 'YYYY-MM') AS month,
     SUM(billing_amount)                 AS monthly_revenue
 FROM billing
 GROUP BY month
@@ -227,5 +231,5 @@ SELECT
     (SELECT COUNT(*) FROM treatments)                AS total_treatments,
     (SELECT ROUND(SUM(billing_amount), 2) FROM billing) AS total_revenue_egp,
     (SELECT ROUND(AVG(billing_amount), 2) FROM billing) AS avg_bill_egp,
-    (SELECT ROUND(SUM(status IN ('Cancelled','No-Show')) * 100.0 / COUNT(*), 2)
+    (SELECT ROUND(SUM(CASE WHEN status IN ('Cancelled','No-Show') THEN 1 ELSE 0 END) * 100.0 / COUNT(*), 2)
      FROM appointments)                              AS cancellation_rate_pct;

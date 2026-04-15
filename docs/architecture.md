@@ -20,8 +20,8 @@ The Smart Hospital system uses an **on-premises virtualization** model, with an 
 │  │  │  │  Docker Engine                       │  │  │   │
 │  │  │  │                                      │  │  │   │
 │  │  │  │  ┌─────────────┐  ┌───────────────┐  │  │  │   │
-│  │  │  │  │  MySQL 8.0  │  │  Grafana 10   │  │  │  │   │
-│  │  │  │  │  :3306      │  │  :3000        │  │  │  │   │
+│  │  │  │  │  PostgreSQL 16  │  │  Grafana 10   │  │  │  │   │
+│  │  │  │  │  :5432      │  │  :3000        │  │  │  │   │
 │  │  │  │  │             │  │               │  │  │  │   │
 │  │  │  │  │  smart_     │◄─┤  Dashboards   │  │  │  │   │
 │  │  │  │  │  hospital   │  │  & Alerts     │  │  │  │   │
@@ -29,7 +29,7 @@ The Smart Hospital system uses an **on-premises virtualization** model, with an 
 │  │  │  │  └─────────────┘  └───────────────┘  │  │  │   │
 │  │  │  │                                      │  │  │   │
 │  │  │  │  Named volumes:                      │  │  │   │
-│  │  │  │    mysql_data   (persistent DB)      │  │  │   │
+│  │  │  │    postgres_data   (persistent DB)      │  │  │   │
 │  │  │  │    grafana_data (dashboards/config)  │  │  │   │
 │  │  │  └──────────────────────────────────────┘  │  │   │
 │  │  └────────────────────────────────────────────┘  │   │
@@ -62,7 +62,7 @@ The Smart Hospital system uses an **on-premises virtualization** model, with an 
 ### Guest OS — Ubuntu Server 22.04 LTS
 - Lightweight (no desktop environment needed)
 - Long-term support until 2027
-- Excellent Docker and MySQL compatibility
+- Excellent Docker and PostgreSQL compatibility
 - Used by major hospitals and cloud providers
 
 ### Container Engine — Docker + Docker Compose
@@ -71,7 +71,7 @@ The Smart Hospital system uses an **on-premises virtualization** model, with an 
 - Easy version upgrades and rollback
 - Industry standard for modern on-prem deployments
 
-### Database — MySQL 8.0
+### Database — PostgreSQL 16
 - Most widely used open-source relational database
 - Native CSV import (`LOAD DATA INFILE`)
 - Excellent Grafana connector
@@ -80,13 +80,13 @@ The Smart Hospital system uses an **on-premises virtualization** model, with an 
 
 ### Dashboard — Grafana 10
 - Open-source, no licence cost
-- Native MySQL data source (no extra plugins)
+- Native PostgreSQL data source (no extra plugins)
 - Real-time auto-refresh
 - Professional look for presentations
 - Runs entirely inside the VM — no internet required
 
 ### Storage Model — Docker Named Volumes (On-Prem)
-- `mysql_data` volume → survives container restarts
+- `postgres_data` volume → survives container restarts
 - Stored inside the VM disk (60 GB)
 - Acts exactly like a hospital on-premises storage server
 - Can be backed up with `docker run --volumes-from ... tar`
@@ -116,9 +116,9 @@ doctors  ─────┘         │
 
 | Service | Container Port | Host Port | URL |
 |---------|---------------|-----------|-----|
-| MySQL   | 3306          | 3307      | mysql://localhost:3307 |
+| PostgreSQL | 5432       | 5433      | postgresql://localhost:5433 |
 | Grafana | 3000          | 3000      | http://localhost:3000  |
-| phpMyAdmin | 80         | 8080      | http://localhost:8080  |
+| pgAdmin | 80           | 8080      | http://localhost:8080  |
 
 ---
 
@@ -135,8 +135,8 @@ Go to https://aws.amazon.com/free/
 sudo apt install awscli -y
 aws configure   # enter your Access Key ID and Secret
 
-# Backup the MySQL data volume to S3
-docker exec hospital-mysql mysqldump -u root -phospital_root_2024 smart_hospital \
+# Backup the PostgreSQL data volume to S3
+docker exec hospital-postgres pg_dump -U hospital_user smart_hospital \
   | gzip | aws s3 cp - s3://your-bucket-name/hospital-backup-$(date +%F).sql.gz
 ```
 
@@ -144,12 +144,12 @@ docker exec hospital-mysql mysqldump -u root -phospital_root_2024 smart_hospital
 ```bash
 crontab -e
 # Add this line (backup every day at 2 AM):
-0 2 * * * docker exec hospital-mysql mysqldump -u root -phospital_root_2024 smart_hospital | gzip | aws s3 cp - s3://your-bucket-name/hospital-backup-$(date +\%F).sql.gz
+0 2 * * * docker exec hospital-postgres pg_dump -U hospital_user smart_hospital | gzip | aws s3 cp - s3://your-bucket-name/hospital-backup-$(date +\%F).sql.gz
 ```
 
 ### Architecture description for your presentation
 > "The Smart Hospital system is deployed on an on-premises virtual server running inside a VMware VM.
-> The MySQL database and Grafana dashboard run as Docker containers for portability and ease of deployment.
+> The PostgreSQL database and Grafana dashboard run as Docker containers for portability and ease of deployment.
 > The system is connected to AWS S3 through the internet, providing daily encrypted backups and
 > disaster-recovery capability. This **Hybrid Cloud** architecture balances data sovereignty (local
 > storage for sensitive patient data) with cloud resilience (offsite backup)."
