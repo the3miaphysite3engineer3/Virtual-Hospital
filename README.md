@@ -10,7 +10,7 @@ No real server required — everything runs inside a VMware/VirtualBox VM using 
 | Component | Technology | Purpose |
 |-----------|-----------|---------|
 | Containerisation | Docker + Docker Compose | Run all services with one command |
-| Database | PostgreSQL 16 | Relational hospital database (5 tables) |
+| Database | PostgreSQL 18 | Relational hospital database (5 tables) |
 | Dashboard | Grafana 10 | Real-time analytics dashboard |
 | DB Admin UI | pgAdmin | Web interface to browse/manage PostgreSQL |
 | Sample data | SQL seed scripts | 50 patients · 10 doctors · 80 appointments · billing |

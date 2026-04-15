@@ -20,7 +20,7 @@ The Smart Hospital system uses an **on-premises virtualization** model, with an 
 │  │  │  │  Docker Engine                       │  │  │   │
 │  │  │  │                                      │  │  │   │
 │  │  │  │  ┌─────────────┐  ┌───────────────┐  │  │  │   │
-│  │  │  │  │  PostgreSQL 16  │  │  Grafana 10   │  │  │  │   │
+│  │  │  │  │  PostgreSQL 18  │  │  Grafana 10   │  │  │  │   │
 │  │  │  │  │  :5432      │  │  :3000        │  │  │  │   │
 │  │  │  │  │             │  │               │  │  │  │   │
 │  │  │  │  │  smart_     │◄─┤  Dashboards   │  │  │  │   │
@@ -71,7 +71,7 @@ The Smart Hospital system uses an **on-premises virtualization** model, with an 
 - Easy version upgrades and rollback
 - Industry standard for modern on-prem deployments
 
-### Database — PostgreSQL 16
+### Database — PostgreSQL 18
 - Most widely used open-source relational database
 - Native bulk import (`COPY ... FROM`)
 - Excellent Grafana connector
