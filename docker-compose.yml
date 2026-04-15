@@ -2,7 +2,7 @@ version: "3.9"
 
 # =============================================================
 #  Smart Hospital — On-Premises Docker Stack
-#  Services:  PostgreSQL 16  +  Grafana 10  +  pgAdmin
+#  Services:  PostgreSQL 18  +  Grafana 10  +  pgAdmin
 # =============================================================
 
 services:
@@ -10,7 +10,7 @@ services:
   # PostgreSQL — relational database server
   # -----------------------------------------------------------
   postgres:
-    image: postgres:16
+    image: postgres:18
     container_name: hospital-postgres
     restart: unless-stopped
     environment:

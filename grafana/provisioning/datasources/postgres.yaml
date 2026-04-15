@@ -12,7 +12,7 @@ datasources:
       maxOpenConns: 10
       maxIdleConns: 10
       connMaxLifetime: 14400
-      postgresVersion: 1600
+      postgresVersion: 1800
       sslmode: disable
     isDefault: true
     editable: false
