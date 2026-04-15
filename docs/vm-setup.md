@@ -77,7 +77,7 @@ bash scripts/setup.sh
 
 The script will:
 - Install Docker + Docker Compose
-- Start MySQL, Grafana, and phpMyAdmin containers
+- Start PostgreSQL, Grafana, and pgAdmin containers
 - Load the hospital schema and sample data automatically
 - Print the access URL when done
 
@@ -95,21 +95,21 @@ Open that URL in your laptop browser (VMware creates a bridged/NAT network so yo
 
 Login: **admin / hospital_admin_2024**
 
-For phpMyAdmin, open:
+For pgAdmin, open:
 
 ```
 http://<VM-IP>:8080
 ```
 
-Login: **root / hospital_root_2024** or **hospital_user / hospital_pass_2024**
+Login: **admin@hospital.local / hospital_pgadmin_2024**
 
 ---
 
-## Part 9 — Access MySQL Directly (optional)
+## Part 9 — Access PostgreSQL Directly (optional)
 
 ```bash
 # From inside the VM:
-docker compose exec mysql mysql -u root -phospital_root_2024 smart_hospital
+docker compose exec postgres psql -U hospital_user -d smart_hospital
 ```
 
 Then run any query from `sql/queries.sql`.
@@ -137,5 +137,5 @@ docker compose logs -f
 |---------|----------|
 | Can't reach port 3000 from laptop | In VMware, set network to **Bridged** mode |
 | Docker permission denied | Run `newgrp docker` or log out and log in again |
-| MySQL container keeps restarting | Run `docker compose logs mysql` to see the error |
-| Grafana shows "No data" | Wait 30 s for MySQL to finish loading seed data, then refresh |
+| PostgreSQL container keeps restarting | Run `docker compose logs postgres` to see the error |
+| Grafana shows "No data" | Wait 30 s for PostgreSQL to finish loading seed data, then refresh |

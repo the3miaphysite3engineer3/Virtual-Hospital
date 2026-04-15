@@ -5,14 +5,14 @@
       "label": "SmartHospitalDB",
       "description": "",
       "type": "datasource",
-      "pluginId": "mysql",
-      "pluginName": "MySQL"
+      "pluginId": "postgres",
+      "pluginName": "PostgreSQL"
     }
   ],
   "__elements": {},
   "__requires": [
     { "type": "grafana", "id": "grafana",     "name": "Grafana",      "version": "10.4.0" },
-    { "type": "datasource", "id": "mysql",    "name": "MySQL",        "version": "1.0.0"  },
+    { "type": "datasource", "id": "postgres", "name": "PostgreSQL", "version": "1.0.0" },
     { "type": "panel", "id": "stat",          "name": "Stat",         "version": ""       },
     { "type": "panel", "id": "timeseries",    "name": "Time series",  "version": ""       },
     { "type": "panel", "id": "barchart",      "name": "Bar chart",    "version": ""       },
@@ -32,12 +32,12 @@
       "type": "stat",
       "title": "Total Patients",
       "gridPos": { "h": 4, "w": 4, "x": 0, "y": 0 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "justifyMode": "center", "textMode": "auto" },
       "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "blue" }, "thresholds": { "mode": "absolute", "steps": [] } }, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "table",
           "rawSql": "SELECT COUNT(*) AS value FROM patients",
           "refId": "A"
@@ -49,12 +49,12 @@
       "type": "stat",
       "title": "Total Doctors",
       "gridPos": { "h": 4, "w": 4, "x": 4, "y": 0 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "justifyMode": "center", "textMode": "auto" },
       "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "green" }, "thresholds": { "mode": "absolute", "steps": [] } }, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "table",
           "rawSql": "SELECT COUNT(*) AS value FROM doctors",
           "refId": "A"
@@ -66,12 +66,12 @@
       "type": "stat",
       "title": "Total Appointments",
       "gridPos": { "h": 4, "w": 4, "x": 8, "y": 0 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "justifyMode": "center", "textMode": "auto" },
       "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "orange" }, "thresholds": { "mode": "absolute", "steps": [] } }, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "table",
           "rawSql": "SELECT COUNT(*) AS value FROM appointments",
           "refId": "A"
@@ -83,12 +83,12 @@
       "type": "stat",
       "title": "Total Revenue (EGP)",
       "gridPos": { "h": 4, "w": 4, "x": 12, "y": 0 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "justifyMode": "center", "textMode": "auto" },
       "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "purple" }, "unit": "currencyEGP", "thresholds": { "mode": "absolute", "steps": [] } }, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "table",
           "rawSql": "SELECT ROUND(SUM(billing_amount), 2) AS value FROM billing",
           "refId": "A"
@@ -100,12 +100,12 @@
       "type": "stat",
       "title": "Total Treatments",
       "gridPos": { "h": 4, "w": 4, "x": 16, "y": 0 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "justifyMode": "center", "textMode": "auto" },
       "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "red" }, "thresholds": { "mode": "absolute", "steps": [] } }, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "table",
           "rawSql": "SELECT COUNT(*) AS value FROM treatments",
           "refId": "A"
@@ -117,12 +117,12 @@
       "type": "stat",
       "title": "Avg Bill (EGP)",
       "gridPos": { "h": 4, "w": 4, "x": 20, "y": 0 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "reduceOptions": { "calcs": ["lastNotNull"] }, "colorMode": "background", "graphMode": "none", "justifyMode": "center", "textMode": "auto" },
       "fieldConfig": { "defaults": { "color": { "mode": "fixed", "fixedColor": "semi-dark-yellow" }, "unit": "currencyEGP", "thresholds": { "mode": "absolute", "steps": [] } }, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "table",
           "rawSql": "SELECT ROUND(AVG(billing_amount), 2) AS value FROM billing",
           "refId": "A"
@@ -134,14 +134,14 @@
       "type": "timeseries",
       "title": "Monthly Appointments Trend",
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 4 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "tooltip": { "mode": "single" }, "legend": { "displayMode": "list", "placement": "bottom" } },
       "fieldConfig": { "defaults": { "custom": { "lineWidth": 2, "fillOpacity": 15 }, "color": { "mode": "palette-classic" } }, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "time_series",
-          "rawSql": "SELECT DATE_FORMAT(appointment_date,'%Y-%m-01') AS time, COUNT(*) AS Appointments FROM appointments GROUP BY DATE_FORMAT(appointment_date,'%Y-%m-01') ORDER BY time",
+          "rawSql": "SELECT date_trunc('month', appointment_date)::date AS time, COUNT(*) AS Appointments FROM appointments GROUP BY 1 ORDER BY 1",
           "refId": "A"
         }
       ]
@@ -151,14 +151,14 @@
       "type": "timeseries",
       "title": "Monthly Revenue Trend (EGP)",
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 4 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "tooltip": { "mode": "single" }, "legend": { "displayMode": "list", "placement": "bottom" } },
       "fieldConfig": { "defaults": { "custom": { "lineWidth": 2, "fillOpacity": 15 }, "color": { "mode": "fixed", "fixedColor": "purple" }, "unit": "currencyEGP" }, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "time_series",
-          "rawSql": "SELECT DATE_FORMAT(billing_date,'%Y-%m-01') AS time, SUM(billing_amount) AS Revenue FROM billing GROUP BY DATE_FORMAT(billing_date,'%Y-%m-01') ORDER BY time",
+          "rawSql": "SELECT date_trunc('month', billing_date)::date AS time, SUM(billing_amount) AS Revenue FROM billing GROUP BY 1 ORDER BY 1",
           "refId": "A"
         }
       ]
@@ -168,12 +168,12 @@
       "type": "barchart",
       "title": "Top 10 Doctors by Appointments",
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 12 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "orientation": "horizontal", "xTickLabelRotation": 0, "barRadius": 0.05, "groupWidth": 0.7, "legend": { "displayMode": "list", "placement": "bottom" } },
       "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" } }, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "table",
           "rawSql": "SELECT CONCAT(d.first_name,' ',d.last_name) AS Doctor, COUNT(a.appointment_id) AS Appointments FROM doctors d JOIN appointments a ON d.doctor_id=a.doctor_id GROUP BY d.doctor_id ORDER BY Appointments DESC LIMIT 10",
           "refId": "A"
@@ -185,12 +185,12 @@
       "type": "piechart",
       "title": "Appointments by Status",
       "gridPos": { "h": 8, "w": 6, "x": 12, "y": 12 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "pieType": "donut", "legend": { "displayMode": "table", "placement": "right", "values": ["percent"] } },
       "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" } }, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "table",
           "rawSql": "SELECT status AS Status, COUNT(*) AS total FROM appointments GROUP BY status",
           "refId": "A"
@@ -202,12 +202,12 @@
       "type": "piechart",
       "title": "Patient Gender Distribution",
       "gridPos": { "h": 8, "w": 6, "x": 18, "y": 12 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "pieType": "pie", "legend": { "displayMode": "table", "placement": "right", "values": ["percent"] } },
       "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" } }, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "table",
           "rawSql": "SELECT gender AS Gender, COUNT(*) AS total FROM patients GROUP BY gender",
           "refId": "A"
@@ -219,12 +219,12 @@
       "type": "barchart",
       "title": "Most Common Treatment Types",
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 20 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "orientation": "horizontal", "xTickLabelRotation": 0, "barRadius": 0.05, "groupWidth": 0.7, "legend": { "displayMode": "list", "placement": "bottom" } },
       "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" } }, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "table",
           "rawSql": "SELECT treatment_type AS Treatment, COUNT(*) AS total FROM treatments GROUP BY treatment_type ORDER BY total DESC",
           "refId": "A"
@@ -236,12 +236,12 @@
       "type": "barchart",
       "title": "Revenue by Doctor Specialization",
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 20 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "orientation": "horizontal", "xTickLabelRotation": 0, "barRadius": 0.05, "groupWidth": 0.7, "legend": { "displayMode": "list", "placement": "bottom" } },
       "fieldConfig": { "defaults": { "color": { "mode": "palette-classic" }, "unit": "currencyEGP" }, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "table",
           "rawSql": "SELECT d.specialization AS Specialization, SUM(b.billing_amount) AS Revenue FROM doctors d JOIN appointments a ON d.doctor_id=a.doctor_id JOIN billing b ON a.appointment_id=b.appointment_id GROUP BY d.specialization ORDER BY Revenue DESC",
           "refId": "A"
@@ -253,12 +253,12 @@
       "type": "table",
       "title": "Recent Appointments",
       "gridPos": { "h": 8, "w": 24, "x": 0, "y": 28 },
-      "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+      "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
       "options": { "sortBy": [{ "displayName": "Date", "desc": true }], "footer": { "show": false } },
       "fieldConfig": { "defaults": {}, "overrides": [] },
       "targets": [
         {
-          "datasource": { "type": "mysql", "uid": "${DS_SMARTHOSPITALDB}" },
+          "datasource": { "type": "postgres", "uid": "${DS_SMARTHOSPITALDB}" },
           "format": "table",
           "rawSql": "SELECT a.appointment_id AS ID, CONCAT(p.first_name,' ',p.last_name) AS Patient, CONCAT(d.first_name,' ',d.last_name) AS Doctor, d.specialization AS Specialization, a.appointment_date AS Date, a.appointment_time AS Time, a.reason_for_visit AS Reason, a.status AS Status FROM appointments a JOIN patients p ON a.patient_id=p.patient_id JOIN doctors d ON a.doctor_id=d.doctor_id ORDER BY a.appointment_date DESC LIMIT 20",
           "refId": "A"

@@ -71,18 +71,18 @@ fi
 $COMPOSE_CMD up -d
 
 # ---------------------------------------------------------------
-# 5. Wait for MySQL to be ready
+# 5. Wait for PostgreSQL to be ready
 # ---------------------------------------------------------------
-info "Waiting for MySQL to accept connections (max 120 s)..."
+info "Waiting for PostgreSQL to accept connections (max 120 s)..."
 for i in $(seq 1 24); do
-  if $COMPOSE_CMD exec -T mysql mysqladmin ping -h localhost \
-       -u root -phospital_root_2024 --silent 2>/dev/null; then
-    info "MySQL is ready."
+  if $COMPOSE_CMD exec -T postgres pg_isready -h localhost -U hospital_user -d smart_hospital \
+       >/dev/null 2>&1; then
+    info "PostgreSQL is ready."
     break
   fi
   sleep 5
   if [[ $i -eq 24 ]]; then
-    error "MySQL did not start in time. Run: $COMPOSE_CMD logs mysql"
+    error "PostgreSQL did not start in time. Run: $COMPOSE_CMD logs postgres"
   fi
 done
 
@@ -98,18 +98,19 @@ echo -e "${GREEN}=============================================================${
 echo ""
 echo "  Grafana Dashboard : http://${HOST_IP}:3000"
 echo "  Grafana login     : admin / hospital_admin_2024"
-echo "  phpMyAdmin        : http://${HOST_IP}:8080"
+echo "  pgAdmin           : http://${HOST_IP}:8080"
+echo "  pgAdmin login     : admin@hospital.local / hospital_pgadmin_2024"
 echo ""
-echo "  MySQL host        : ${HOST_IP}:3307"
-echo "  MySQL database    : smart_hospital"
-echo "  MySQL user        : hospital_user"
-echo "  MySQL password    : hospital_pass_2024"
+echo "  PostgreSQL host   : ${HOST_IP}:5433"
+echo "  PostgreSQL DB     : smart_hospital"
+echo "  PostgreSQL user   : hospital_user"
+echo "  PostgreSQL pass   : hospital_pass_2024"
 echo ""
 echo "  Useful commands:"
 echo "    View logs        : $COMPOSE_CMD logs -f"
 echo "    Stop stack       : $COMPOSE_CMD down"
 echo "    Restart stack    : $COMPOSE_CMD restart"
-echo "    MySQL shell      : $COMPOSE_CMD exec mysql mysql -u root -phospital_root_2024 smart_hospital"
+echo "    PostgreSQL shell : $COMPOSE_CMD exec postgres psql -U hospital_user -d smart_hospital"
 echo ""
 echo -e "${YELLOW}NOTE: If you just added your user to the 'docker' group, log out${NC}"
 echo -e "${YELLOW}      and log in again, or run: newgrp docker${NC}"

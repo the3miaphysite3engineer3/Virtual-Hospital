@@ -2,8 +2,8 @@ apiVersion: 1
 
 datasources:
   - name: SmartHospitalDB
-    type: mysql
-    url: mysql:3306
+    type: postgres
+    url: postgres:5432
     database: smart_hospital
     user: hospital_user
     secureJsonData:
@@ -12,7 +12,7 @@ datasources:
       maxOpenConns: 10
       maxIdleConns: 10
       connMaxLifetime: 14400
-      tlsAuth: false
-      tlsAuthWithCACert: false
+      postgresVersion: 1600
+      sslmode: disable
     isDefault: true
     editable: false
