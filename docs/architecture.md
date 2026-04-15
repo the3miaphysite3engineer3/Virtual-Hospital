@@ -73,7 +73,7 @@ The Smart Hospital system uses an **on-premises virtualization** model, with an 
 
 ### Database — PostgreSQL 16
 - Most widely used open-source relational database
-- Native CSV import (`LOAD DATA INFILE`)
+- Native bulk import (`COPY ... FROM`)
 - Excellent Grafana connector
 - Perfect for hospital relational schemas (patients, appointments, billing)
 - ACID-compliant — data integrity guaranteed
